@@ -4,6 +4,9 @@ import m.kash.productservicek.Dtos.RequestBodyProductDto;
 import m.kash.productservicek.Models.Product;
 import m.kash.productservicek.Services.ProductService;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -32,8 +35,9 @@ public class ProductController {
     }
 
     @GetMapping("/products")
-    public List<Product> getAllProducts(){
-        return  productService.getAllProducts();
+    public ResponseEntity<List<Product>> getAllProducts(){
+        List<Product> products=productService.getAllProducts();
+        return new ResponseEntity<>(products, HttpStatus.OK);
 
     }
 
@@ -41,4 +45,5 @@ public class ProductController {
     public void updateProduct(){
 
     }
+
 }

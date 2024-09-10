@@ -2,6 +2,7 @@ package m.kash.productservicek.Services;
 
 import m.kash.productservicek.Dtos.FakeStoreProductDto;
 import m.kash.productservicek.Models.Product;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
@@ -19,8 +20,12 @@ public class FakeStoreProductService implements ProductService{
 }
     @Override
     public Product getSingleProduct(Long productId) {
-       FakeStoreProductDto fakeStoreProductDto= restTemplate.getForObject("https://fakestoreapi.com/products/" + productId, FakeStoreProductDto.class);
-        return fakeStoreProductDto.toProduct();
+
+        if(productId==0){
+            throw new IllegalArgumentException("Invalid productId, please try out some other product");
+        }
+       ResponseEntity<FakeStoreProductDto> fakeStoreProductDto= restTemplate.getForEntity("https://fakestoreapi.com/products/" + productId, FakeStoreProductDto.class);
+        return fakeStoreProductDto.getBody().toProduct();
     }
 
     @Override
