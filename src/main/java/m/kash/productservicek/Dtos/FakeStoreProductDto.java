@@ -5,6 +5,8 @@ import lombok.Setter;
 import m.kash.productservicek.Models.Category;
 import m.kash.productservicek.Models.Product;
 
+import java.util.List;
+
 @Getter
 @Setter
 public class FakeStoreProductDto {

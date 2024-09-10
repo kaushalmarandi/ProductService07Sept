@@ -1,11 +1,11 @@
 package m.kash.productservicek.Services;
 
 import m.kash.productservicek.Dtos.FakeStoreProductDto;
-import m.kash.productservicek.Models.Category;
 import m.kash.productservicek.Models.Product;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service("fakestore")
@@ -25,11 +25,24 @@ public class FakeStoreProductService implements ProductService{
 
     @Override
     public List<Product> getAllProducts() {
-        return null;
+        List<Product> products=new ArrayList<>();
+        List<FakeStoreProductDto> fakeStoreProductDtos=restTemplate.getForObject("https://fakestoreapi.com/products", List.class);
+        for(FakeStoreProductDto fakeStoreProductDto: fakeStoreProductDtos){
+            products.add(fakeStoreProductDto.toProduct());
+        }
+        return products;
     }
 
     @Override
-    public Product createProduct(String title, double price, String description, Category category, String image) {
-        return null;
+    public Product createProduct(String title, double price, String description, String image, String category) {
+       FakeStoreProductDto fakeStoreProductDto=new FakeStoreProductDto();
+       fakeStoreProductDto.setTitle(title);
+       fakeStoreProductDto.setPrice(price);
+       fakeStoreProductDto.setDescription(description);
+       fakeStoreProductDto.setImage(image);
+       fakeStoreProductDto.setCategory(category);
+
+       FakeStoreProductDto fakeStoreProductDto1=  restTemplate.postForObject("https://fakestoreapi.com/products", fakeStoreProductDto, FakeStoreProductDto.class);
+        return fakeStoreProductDto1.toProduct();
     }
 }
