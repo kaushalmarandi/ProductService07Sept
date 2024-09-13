@@ -1,5 +1,6 @@
 package m.kash.productservicek.Models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.Entity;
 import jakarta.persistence.OneToMany;
 import lombok.AllArgsConstructor;
@@ -18,6 +19,7 @@ public class Category extends BaseModel{
     private String title;
     private  String description;
     @OneToMany(mappedBy = "category")
+    @JsonIgnore
     private List<Product> products;
 
 }

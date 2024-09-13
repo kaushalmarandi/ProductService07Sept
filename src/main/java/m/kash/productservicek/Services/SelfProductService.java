@@ -20,12 +20,12 @@ public class SelfProductService implements ProductService{
     }
     @Override
     public Product getSingleProduct(Long productId) {
-        return null;
+        return productRepository.findByIdIs(productId);
     }
 
     @Override
     public List<Product> getAllProducts() {
-        return null;
+        return productRepository.findAll();
     }
 
     @Override
